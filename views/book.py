@@ -74,10 +74,8 @@ def display_comments_section():
 
 
 def show():
-    try:
-        st.set_page_config(page_title="AI全景探索", page_icon="🤖", layout="wide")
+    try:       
         init_db()
-
         # --- Header Section ---
         st.title("AI全景探索：人工智能的未来之旅")
         st.markdown("### 一本开源书籍，探索人工智能的未来")
