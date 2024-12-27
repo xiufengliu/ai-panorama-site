@@ -174,17 +174,16 @@ def show():
             """
         )
 
-        # --- Author Introduction ---
-        st.markdown("---")
-        show_authors()
-
-        # --- Contact Form ---
-        st.markdown("---")
-        show_contact_form()
-
-    # --- Comments Section ---
-        st.markdown("---")
-        display_comments_section()
+        tab1, tab2, tab3 = st.tabs(["读者评论", "关于作者", "联系我们"])
+        
+        with tab1:
+            display_comments_section()
+            
+        with tab2:
+            show_authors()
+            
+        with tab3:
+            show_contact_form()
     except Exception as e:
         st.error(f"发生错误: {str(e)}")
         logging.error(f"Application error: {str(e)}")    
