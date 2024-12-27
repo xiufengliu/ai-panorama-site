@@ -1,7 +1,7 @@
 import streamlit as st
 import logging
 from pathlib import Path
-from utils.database import init_db, get_comments, add_comment, add_message
+from utils.database import init_db, get_comments, add_comment, add_message, get_next_anon_number
 
 # Configure logging
 logging.basicConfig(
@@ -15,14 +15,7 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-def get_next_anon_number():
-    comments = get_comments()
-    existing_numbers = [
-        int(c[1].split('_')[1]) 
-        for c in comments 
-        if c[1].startswith('anon_') and c[1].split('_')[1].isdigit()
-    ]
-    return max(existing_numbers, default=0) + 1
+
 
 def display_reply(reply):
     st.write(f"↳ **{reply[1]}**: {reply[3]}")
@@ -61,18 +54,19 @@ def display_comments_section():
         
         if st.form_submit_button("提交"):
             if comment_text:
-                anon_number = get_next_anon_number()
-                name = f"anon_{anon_number}"
-                email = f"anon_{anon_number}@anonymous.com"
-                parent_id = st.session_state.get('reply_to', None)
-                add_comment(name, email, comment_text, parent_id)
-                if 'reply_to' in st.session_state:
-                    del st.session_state.reply_to
-                st.experimental_rerun()
+                try:
+                    next_num = get_next_anon_number()
+                    name = f"anon_{next_num}"
+                    email = f"anon_{next_num}@anonymous.com"
+                    parent_id = st.session_state.get('reply_to', None)
+                    add_comment(name, email, comment_text, parent_id)
+                    if 'reply_to' in st.session_state:
+                        del st.session_state.reply_to
+                    st.experimental_rerun()
+                except Exception as e:
+                    st.error(f"评论失败: {str(e)}")
             else:
                 st.error("请输入评论内容")
-
-
 
 def show_authors():
     st.markdown("## 关于作者")

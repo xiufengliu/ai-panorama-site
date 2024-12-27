@@ -62,19 +62,39 @@ def add_comment(name, email, comment, parent_id=None):
     finally:
         conn.close()
 
-def delete_comment(comment_id):
-    """Delete a comment and all its replies"""
+def get_next_anon_number():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        # First delete all replies
+        cursor.execute("""
+            SELECT name FROM comments 
+            WHERE name LIKE 'anon_%' 
+            ORDER BY CAST(SUBSTR(name, 6) AS INTEGER) DESC 
+            LIMIT 1
+        """)
+        result = cursor.fetchone()
+        if result:
+            last_num = int(result[0].split('_')[1])
+            return last_num + 1
+        return 1
+    except sqlite3.Error as e:
+        logging.error(f"Database error: {e}")
+        return 1
+    finally:
+        conn.close()
+
+def delete_comment(comment_id):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("BEGIN")
         cursor.execute("DELETE FROM comments WHERE parent_id = ?", (comment_id,))
-        # Then delete the main comment
         cursor.execute("DELETE FROM comments WHERE id = ?", (comment_id,))
-        conn.commit()
+        cursor.execute("COMMIT")
         return True
     except sqlite3.Error as e:
-        logging.error(f"Error deleting comment {comment_id}: {e}")
+        cursor.execute("ROLLBACK")
+        logging.error(f"Delete error: {e}")
         return False
     finally:
         conn.close()
