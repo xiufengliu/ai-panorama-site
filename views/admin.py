@@ -1,27 +1,30 @@
 import streamlit as st
 from utils.database import get_comments, delete_comment, get_messages, delete_message
-import streamlit as st
-from utils.database import get_comments, delete_comment, get_messages, delete_message
 import uuid
+import time
 
 def show_comments_management():
     st.subheader("评论管理")
     comments = get_comments()
     
-    # Show root comments
     root_comments = [c for c in comments if c[4] is None]
     for comment in root_comments:
         with st.expander(f"评论 by {comment[1]} ({comment[2]})"):
             st.write(f"内容: {comment[3]}")
             st.write(f"时间: {comment[5]}")
             
-            # Generate unique key with uuid
             unique_key = str(uuid.uuid4())[:8]
-            if st.button("删除主评论", key=f"del_root_{comment[0]}_{unique_key}"):
-                delete_comment(comment[0])
-                st.experimental_rerun()
+            col1, col2 = st.columns([1, 4])
+            with col1:
+                if st.button("删除主评论", key=f"del_root_{comment[0]}_{unique_key}"):
+                    try:
+                        delete_comment(comment[0])
+                        st.success("评论已删除")
+                        time.sleep(1)  # Give user time to see confirmation
+                        st.experimental_rerun()
+                    except Exception as e:
+                        st.error(str(e))
             
-            # Show replies under root comment
             replies = [c for c in comments if c[4] == comment[0]]
             if replies:
                 st.markdown("**回复:**")
@@ -29,13 +32,15 @@ def show_comments_management():
                     st.write(f"↳ {reply[1]}: {reply[3]}")
                     st.caption(f"时间: {reply[5]}")
                     
-                    # Generate unique key for reply button
                     reply_key = str(uuid.uuid4())[:8]
                     if st.button("删除回复", key=f"del_reply_{reply[0]}_{reply_key}"):
-                        delete_comment(reply[0])
-                        st.experimental_rerun()
-
-
+                        try:
+                            delete_comment(reply[0])
+                            st.success("回复已删除")
+                            time.sleep(1)
+                            st.experimental_rerun()
+                        except Exception as e:
+                            st.error(str(e))
 
 def show_messages_management():
     st.subheader("留言管理")

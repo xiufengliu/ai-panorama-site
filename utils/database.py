@@ -1,4 +1,5 @@
 import sqlite3
+import logging
 from pathlib import Path
 
 DB_NAME = "aibook.db"
@@ -62,14 +63,35 @@ def add_comment(name, email, comment, parent_id=None):
         conn.close()
 
 def delete_comment(comment_id):
+    """Delete a comment and all its replies"""
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
+        # First delete all replies
+        cursor.execute("DELETE FROM comments WHERE parent_id = ?", (comment_id,))
+        # Then delete the main comment
         cursor.execute("DELETE FROM comments WHERE id = ?", (comment_id,))
         conn.commit()
+        return True
+    except sqlite3.Error as e:
+        logging.error(f"Error deleting comment {comment_id}: {e}")
+        return False
     finally:
-        conn.close()        
+        conn.close()
 
+def delete_message(message_id):
+    """Delete a message"""
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM messages WHERE id = ?", (message_id,))
+        conn.commit()
+        return True
+    except sqlite3.Error as e:
+        logging.error(f"Error deleting message {message_id}: {e}")
+        return False
+    finally:
+        conn.close()
 
 def add_message(name, email, message):
     try:
@@ -83,14 +105,7 @@ def add_message(name, email, message):
     finally:
         conn.close()
 
-def delete_message(message_id):
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM messages WHERE id = ?", (message_id,))
-        conn.commit()
-    finally:
-        conn.close()
+
 
 def get_messages():
     try:
