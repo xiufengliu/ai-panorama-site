@@ -25,11 +25,41 @@ def show_messages_management():
                 delete_message(message[0])
                 st.experimental_rerun()
 
+def check_password():
+    """Returns `True` if the user had the correct password."""
+    if "password_correct" not in st.session_state:
+        st.session_state.password_correct = False
+
+    if st.session_state.password_correct:
+        return True
+
+    # Show input for password
+    st.subheader("请输入管理员密码")
+    password = st.text_input("密码", type="password", key="admin_password")
+    
+    if st.button("登录"):
+        if password == "admin1234":  # Replace with your secure password
+            st.session_state.password_correct = True
+            st.experimental_rerun()
+        else:
+            st.error("密码错误")
+            return False
+
+    return st.session_state.password_correct
+
 def show():
     if not check_password():
         return
     
     st.title("网站管理")
+    
+    tab1, tab2 = st.tabs(["评论管理", "留言管理"])
+    
+    with tab1:
+        show_comments_management()
+    
+    with tab2:
+        show_messages_management()
     
     tab1, tab2 = st.tabs(["评论管理", "留言管理"])
     
