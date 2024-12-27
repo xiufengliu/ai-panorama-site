@@ -15,7 +15,15 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-# Comment display functions
+def get_next_anon_number():
+    comments = get_comments()
+    existing_numbers = [
+        int(c[1].split('_')[1]) 
+        for c in comments 
+        if c[1].startswith('anon_') and c[1].split('_')[1].isdigit()
+    ]
+    return max(existing_numbers, default=0) + 1
+
 def display_reply(reply):
     st.write(f"↳ **{reply[1]}**: {reply[3]}")
     st.caption(f"回复于 {reply[5]}")
@@ -24,8 +32,8 @@ def display_comment(comment):
     st.write(f"**{comment[1]}**: {comment[3]}")
     st.caption(f"发表于 {comment[5]}")
     
-    reply_key = f"reply_button_{comment[0]}"
-    if st.button("回复", key=reply_key):
+    reply_key = f"reply_link_{comment[0]}"
+    if st.markdown(f"[回复](#reply_{comment[0]})", key=reply_key):
         st.session_state.reply_to = comment[0]
         st.experimental_rerun()
     
@@ -37,7 +45,6 @@ def display_comment(comment):
                 with col2:
                     display_reply(reply)
 
-
 def display_comments_section():
     st.markdown("## 读者评论")
     comments = get_comments()
@@ -48,28 +55,20 @@ def display_comments_section():
             st.markdown("---")
     
     with st.form(key='comment_form'):
-        name = st.text_input("您的姓名:")
-        email = st.text_input("您的邮箱:")
-        if 'reply_to' in st.session_state:
-            parent_comment = next((c for c in comments if c[0] == st.session_state.reply_to), None)
-            comment_text = st.text_area(
-                f"回复 {parent_comment[1]}:" if parent_comment else "添加您的评论:", 
-                key="new_comment"
-            )
-        else:
-            comment_text = st.text_area("添加您的评论:", key="new_comment")
+        comment_text = st.text_area("添加您的评论:", key="new_comment")
         
         if st.form_submit_button("提交"):
-            if name and email and comment_text:
+            if comment_text:
+                anon_number = get_next_anon_number()
+                name = f"anon_{anon_number}"
+                email = f"anon_{anon_number}@anonymous.com"
                 parent_id = st.session_state.get('reply_to', None)
                 add_comment(name, email, comment_text, parent_id)
                 if 'reply_to' in st.session_state:
                     del st.session_state.reply_to
                 st.experimental_rerun()
             else:
-                st.error("请填写所有必填字段")
-
-
+                st.error("请输入评论内容")
 
 
 
