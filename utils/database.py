@@ -49,3 +49,12 @@ def add_comment(name, email, comment, parent_id=None):
         conn.commit()
     finally:
         conn.close()
+
+def delete_comment(comment_id):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM comments WHERE id = ?", (comment_id,))
+        conn.commit()
+    finally:
+        conn.close()        
