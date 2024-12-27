@@ -70,6 +70,19 @@ def delete_comment(comment_id):
     finally:
         conn.close()        
 
+
+def add_message(name, email, message):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)",
+            (name, email, message)
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
 def delete_message(message_id):
     try:
         conn = get_db_connection()
