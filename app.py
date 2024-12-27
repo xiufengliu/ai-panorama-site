@@ -1,7 +1,7 @@
 import streamlit as st
 import logging
 from pathlib import Path
-from database import init_db, get_comments, add_comment
+from utils.database import init_db, get_comments, add_comment
 
 # Configure logging
 logging.basicConfig(
