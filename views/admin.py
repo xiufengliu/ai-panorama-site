@@ -5,13 +5,26 @@ def show_comments_management():
     st.subheader("评论管理")
     comments = get_comments()
     
-    for comment in comments:
+    # Show root comments
+    root_comments = [c for c in comments if c[4] is None]
+    for comment in root_comments:
         with st.expander(f"评论 by {comment[1]} ({comment[2]})"):
             st.write(f"内容: {comment[3]}")
             st.write(f"时间: {comment[5]}")
-            if st.button("删除", key=f"del_comment_{comment[0]}"):
+            if st.button("删除", key=f"del_root_{comment[0]}"):
                 delete_comment(comment[0])
                 st.experimental_rerun()
+                
+            # Show replies under root comment
+            replies = [c for c in comments if c[4] == comment[0]]
+            if replies:
+                st.markdown("**回复:**")
+                for reply in replies:
+                    st.write(f"↳ {reply[1]}: {reply[3]}")
+                    st.caption(f"时间: {reply[5]}")
+                    if st.button("删除", key=f"del_reply_{reply[0]}_{comment[0]}"):
+                        delete_comment(reply[0])
+                        st.experimental_rerun()
 
 def show_messages_management():
     st.subheader("留言管理")
