@@ -1,7 +1,7 @@
 import streamlit as st
 from utils.database import get_comments, delete_comment, get_messages, delete_message
 import uuid
-import time
+import logging
 
 def show_comments_management():
     st.subheader("评论管理")
@@ -17,13 +17,13 @@ def show_comments_management():
             col1, col2 = st.columns([1, 4])
             with col1:
                 if st.button("删除主评论", key=f"del_root_{comment[0]}_{unique_key}"):
-                    try:
-                        delete_comment(comment[0])
+                    logging.info(f"Attempting to delete comment {comment[0]}")
+                    success = delete_comment(comment[0])
+                    if success:
                         st.success("评论已删除")
-                        time.sleep(1)  # Give user time to see confirmation
                         st.experimental_rerun()
-                    except Exception as e:
-                        st.error(str(e))
+                    else:
+                        st.error("删除失败")
             
             replies = [c for c in comments if c[4] == comment[0]]
             if replies:
@@ -31,16 +31,15 @@ def show_comments_management():
                 for reply in replies:
                     st.write(f"↳ {reply[1]}: {reply[3]}")
                     st.caption(f"时间: {reply[5]}")
-                    
                     reply_key = str(uuid.uuid4())[:8]
                     if st.button("删除回复", key=f"del_reply_{reply[0]}_{reply_key}"):
-                        try:
-                            delete_comment(reply[0])
+                        logging.info(f"Attempting to delete reply {reply[0]}")
+                        success = delete_comment(reply[0])
+                        if success:
                             st.success("回复已删除")
-                            time.sleep(1)
                             st.experimental_rerun()
-                        except Exception as e:
-                            st.error(str(e))
+                        else:
+                            st.error("删除失败")
 
 def show_messages_management():
     st.subheader("留言管理")
