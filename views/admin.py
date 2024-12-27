@@ -1,5 +1,8 @@
 import streamlit as st
 from utils.database import get_comments, delete_comment, get_messages, delete_message
+import streamlit as st
+from utils.database import get_comments, delete_comment, get_messages, delete_message
+import uuid
 
 def show_comments_management():
     st.subheader("评论管理")
@@ -7,13 +10,14 @@ def show_comments_management():
     
     # Show root comments
     root_comments = [c for c in comments if c[4] is None]
-    for i, comment in enumerate(root_comments):
+    for comment in root_comments:
         with st.expander(f"评论 by {comment[1]} ({comment[2]})"):
             st.write(f"内容: {comment[3]}")
             st.write(f"时间: {comment[5]}")
             
-            # Use index in key to ensure uniqueness
-            if st.button("删除主评论", key=f"del_root_{i}_{comment[0]}"):
+            # Generate unique key with uuid
+            unique_key = str(uuid.uuid4())[:8]
+            if st.button("删除主评论", key=f"del_root_{comment[0]}_{unique_key}"):
                 delete_comment(comment[0])
                 st.experimental_rerun()
             
@@ -21,14 +25,17 @@ def show_comments_management():
             replies = [c for c in comments if c[4] == comment[0]]
             if replies:
                 st.markdown("**回复:**")
-                for j, reply in enumerate(replies):
+                for reply in replies:
                     st.write(f"↳ {reply[1]}: {reply[3]}")
                     st.caption(f"时间: {reply[5]}")
                     
-                    # Use both indices for unique reply keys
-                    if st.button("删除回复", key=f"del_reply_{i}_{j}_{reply[0]}"):
+                    # Generate unique key for reply button
+                    reply_key = str(uuid.uuid4())[:8]
+                    if st.button("删除回复", key=f"del_reply_{reply[0]}_{reply_key}"):
                         delete_comment(reply[0])
                         st.experimental_rerun()
+
+
 
 def show_messages_management():
     st.subheader("留言管理")
