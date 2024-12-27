@@ -12,12 +12,11 @@ def show_comments_management():
             st.write(f"内容: {comment[3]}")
             st.write(f"时间: {comment[5]}")
             
-            # Unique key for root comment deletion
-            button_key = f"del_root_{comment[0]}_{comment[5].replace(' ', '_')}"
-            if st.button("删除主评论", key=button_key):
+            # Use index in key to ensure uniqueness
+            if st.button("删除主评论", key=f"del_root_{i}_{comment[0]}"):
                 delete_comment(comment[0])
                 st.experimental_rerun()
-                
+            
             # Show replies under root comment
             replies = [c for c in comments if c[4] == comment[0]]
             if replies:
@@ -26,9 +25,8 @@ def show_comments_management():
                     st.write(f"↳ {reply[1]}: {reply[3]}")
                     st.caption(f"时间: {reply[5]}")
                     
-                    # Unique key for reply deletion
-                    reply_key = f"del_reply_{reply[0]}_{reply[5].replace(' ', '_')}"
-                    if st.button("删除回复", key=reply_key):
+                    # Use both indices for unique reply keys
+                    if st.button("删除回复", key=f"del_reply_{i}_{j}_{reply[0]}"):
                         delete_comment(reply[0])
                         st.experimental_rerun()
 
