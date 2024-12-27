@@ -1,7 +1,7 @@
 import streamlit as st
 import logging
 from pathlib import Path
-from utils.database import init_db, get_comments, add_comment
+from utils.database import init_db, get_comments, add_comment, add_message
 
 # Configure logging
 logging.basicConfig(
@@ -32,11 +32,13 @@ def display_comment(comment):
     st.write(f"**{comment[1]}**: {comment[3]}")
     st.caption(f"发表于 {comment[5]}")
     
-    reply_key = f"reply_link_{comment[0]}"
-    if st.markdown(f"[回复](#reply_{comment[0]})", key=reply_key):
+    # Use button styled as link for reply
+    reply_key = f"reply_button_{comment[0]}"
+    if st.button("回复 ↩", key=reply_key, type="secondary", help="点击回复此评论"):
         st.session_state.reply_to = comment[0]
         st.experimental_rerun()
     
+    # Display replies
     replies = get_comments(parent_id=comment[0])
     if replies:
         with st.container():
@@ -102,6 +104,19 @@ def show_authors():
         特别是在医疗健康相关问题上的深度探索。
         """)
 
+def show_contact_form():
+    st.markdown("## 联系作者")
+    with st.form(key='contact_form'):
+        name = st.text_input("您的姓名:")
+        email = st.text_input("您的邮箱:")
+        message = st.text_area("您的留言:")
+        
+        if st.form_submit_button("发送"):
+            if name and email and message:
+                add_message(name, email, message)
+                st.success("消息已发送！作者会尽快回复。")
+            else:
+                st.error("请填写所有字段")
 
 def show():
     try:       
@@ -162,6 +177,10 @@ def show():
         # --- Author Introduction ---
         st.markdown("---")
         show_authors()
+
+        # --- Contact Form ---
+        st.markdown("---")
+        show_contact_form()
 
     # --- Comments Section ---
         st.markdown("---")
