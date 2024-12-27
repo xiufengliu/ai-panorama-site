@@ -1,4 +1,9 @@
 import streamlit as st
+st.set_page_config(
+    page_title="AI全景探索",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 from views import admin, book
 
 def apply_custom_css():
@@ -35,9 +40,4 @@ def main():
         admin.show()
 
 if __name__ == "__main__":
-    st.set_page_config(
-        page_title="AI全景探索",
-        layout="wide",
-        initial_sidebar_state="collapsed"
-    )
     main()
