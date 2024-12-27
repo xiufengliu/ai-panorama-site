@@ -72,6 +72,37 @@ def display_comments_section():
 
 
 
+def show_authors():
+    st.markdown("## 关于作者")
+    
+    # First Author
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.image("image/Xiufeng_liu.png", width=200)
+    with col2:
+        st.markdown("### 刘秀峰 (Xiufeng Liu)")
+        st.markdown("""
+        刘秀峰现为丹麦技术大学（Technical University of Denmark）技术、管理与经济系高级研究员(副教授)。
+        2012年，他获得丹麦奥尔堡大学计算机科学博士学位。2013年至2014年，他在加拿大滑铁卢大学从事博士后研究，
+        并在IBM加拿大实验室担任研究科学家。他的研究方向包括智能电表数据分析、数据仓库、能源信息学以及大数据领域，
+        致力于推动信息技术与能源系统的深度融合。
+        """)
+    
+    st.markdown("---")
+    
+    # Second Author
+    col3, col4 = st.columns([1, 3])
+    with col3:
+        st.image("image/zhijinwang.jpg", width=200)
+    with col4:
+        st.markdown("### 王智谨 (Zhijin Wang)")
+        st.markdown("""
+        王智谨现为中国厦门集美大学计算机工程学院副教授。2016年，他获得华东师范大学计算机科学与技术系博士学位。
+        他的研究兴趣包括推荐系统、时间序列预测以及健康与医疗领域的人工智能应用。他致力于推动人工智能技术在实际应用中的创新发展，
+        特别是在医疗健康相关问题上的深度探索。
+        """)
+
+
 def show():
     try:       
         init_db()
@@ -130,14 +161,7 @@ def show():
 
         # --- Author Introduction ---
         st.markdown("---")
-        st.markdown("## 关于作者")
-        st.markdown(
-            """
-            这里写上作者信息, 例如作者的背景、研究方向、联系方式等。
-
-            也可以是一个多人协作的作者列表。
-            """
-        )
+        show_authors()
 
     # --- Comments Section ---
         st.markdown("---")

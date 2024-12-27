@@ -11,6 +11,7 @@ def init_db():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
+        # Create comments table
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS comments (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,6 +21,16 @@ def init_db():
                 parent_id INTEGER DEFAULT NULL,
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (parent_id) REFERENCES comments (id)
+            )
+        """)
+        # Create messages table
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS messages (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL,
+                message TEXT NOT NULL,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         """)
         conn.commit()
@@ -58,3 +69,21 @@ def delete_comment(comment_id):
         conn.commit()
     finally:
         conn.close()        
+
+def delete_message(message_id):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM messages WHERE id = ?", (message_id,))
+        conn.commit()
+    finally:
+        conn.close()
+
+def get_messages():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM messages ORDER BY timestamp DESC")
+        return cursor.fetchall()
+    finally:
+        conn.close()
