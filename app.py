@@ -75,7 +75,7 @@ def main():
             *   **面向未来:** 不仅回顾过去，更着眼于 AI 的未来发展趋势。
             """
         )
-        with open("path/to/your/book.pdf", "rb") as f:
+        with open("data/AI_book_v1.pdf", "rb") as f:
             st.download_button(
                 label="📥 下载本书 PDF",
                 data=f,
