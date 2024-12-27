@@ -11,7 +11,7 @@ def check_password():
             st.text_input("Password", type="password", key="password")
             if st.form_submit_button("Login"):
                 if (st.session_state.username == "admin" and 
-                    st.session_state.password == "your_secure_password"):
+                    st.session_state.password == "koobai1234"):
                     st.session_state.authenticated = True
                     st.experimental_rerun()
                 else:
