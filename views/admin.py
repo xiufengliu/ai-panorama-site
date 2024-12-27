@@ -85,10 +85,3 @@ def show():
     with tab2:
         show_messages_management()
     
-    tab1, tab2 = st.tabs(["评论管理", "留言管理"])
-    
-    with tab1:
-        show_comments_management()
-    
-    with tab2:
-        show_messages_management()
