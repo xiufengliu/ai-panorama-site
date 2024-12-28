@@ -124,11 +124,11 @@ def show_donation():
     
     with col1:
         st.markdown("### 微信支付")
-        st.image("image/wechat_qr.png", width=100)
+        st.image("image/wechat_qr.png", width=180)
         
     with col2:
         st.markdown("### 支付宝")
-        st.image("image/alipay_qr.png", width=100)
+        st.image("image/alipay_qr.png", width=180)
     
     st.markdown("""
     **感谢您的支持！**
