@@ -124,11 +124,11 @@ def show_donation():
     
     with col1:
         st.markdown("### 微信支付")
-        st.image("image/wechat_qr.png", width=200)
+        st.image("image/wechat_qr.png", width=100)
         
     with col2:
         st.markdown("### 支付宝")
-        st.image("image/alipay_qr.png", width=200)
+        st.image("image/alipay_qr.png", width=100)
     
     st.markdown("""
     **感谢您的支持！**
@@ -169,13 +169,14 @@ def show():
                 *   **面向未来:** 不仅回顾过去，更着眼于 AI 的未来发展趋势。
                 """
             )
-            with open("data/AI_book_v1.pdf", "rb") as f:
-                st.download_button(
-                    label="📥 下载本书 PDF",
-                    data=f,
-                    file_name="AI全景探索.pdf",
-                    mime="application/pdf",
-                )
+            st.markdown("""
+                ## 欢迎来到《AI全景探索》的世界！
+                ...existing code...
+                *   **面向未来:** 不仅回顾过去，更着眼于 AI 的未来发展趋势。
+                
+                ### [📥 下载本书 PDF](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
+                """
+            )
 
         # --- Book Introduction ---
         st.markdown("---")
@@ -202,7 +203,23 @@ def show():
             """
         )
 
-        tab1, tab2, tab3, tab4 = st.tabs(["读者评论", "关于作者", "联系我们", "支持我们"])
+                # Custom CSS for tab titles
+        st.markdown("""
+            <style>
+            .stTab {
+                font-size: 18px !important;
+                font-weight: bold !important;
+            }
+            </style>
+        """, unsafe_allow_html=True)
+
+        # Tabs with icons and bold text
+        tab1, tab2, tab3, tab4 = st.tabs([
+            "💬 读者评论",
+            "👥 关于作者",
+            "📧 联系我们",
+            "❤️ 支持我们"
+        ])
         
         with tab1:
             display_comments_section()
