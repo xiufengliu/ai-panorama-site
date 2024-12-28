@@ -262,8 +262,8 @@ def show():
             "💬 读者评论",
             "👥 关于作者",
             "©️ 版权信息",
-            "📧 联系我们",
-            "❤️ 支持我们"
+            "❤️ 支持我们",
+            "📧 联系我们"
         ])
         
         with tab1:
@@ -276,10 +276,11 @@ def show():
             show_copyright()
             
         with tab4:
-            show_contact_form()
+            show_donation()
             
         with tab5:
-            show_donation()
+            show_contact_form()
+            
 
     except Exception as e:
         st.error(f"发生错误: {str(e)}")
