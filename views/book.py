@@ -78,7 +78,7 @@ def show_authors():
     with col2:
         st.markdown("### 刘秀峰 (Xiufeng Liu)")
         st.markdown("""
-        刘秀峰现为丹麦技术大学（Technical University of Denmark）技术、管理与经济学部高级研究员(副教授)。
+        刘秀峰现为丹麦科技大学（Technical University of Denmark）技术、管理与经济学部高级研究员(副教授)。
         2012年，他获得丹麦奥尔堡大学计算机科学博士学位。2013年至2014年，他在加拿大滑铁卢大学从事博士后研究，
         并在IBM多伦多研发中心担任研究科学家。他的研究方向包括智能电表数据分析、数据仓库、能源信息学以及大数据领域，
         致力于推动信息技术与能源系统的深度融合。
@@ -111,6 +111,35 @@ def show_contact_form():
                 st.success("消息已发送！作者会尽快回复。")
             else:
                 st.error("请填写所有字段")
+
+
+def show_donation():
+    st.markdown("## 支持我们")
+    st.markdown("""
+    创作不易，如果您觉得这本书对您有价值，欢迎您通过以下方式支持我们继续创作。
+    您的每一份支持都是我们持续创作的动力！
+    """)
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### 微信支付")
+        st.image("image/wechat_qr.png", width=200)
+        
+    with col2:
+        st.markdown("### 支付宝")
+        st.image("image/alipay_qr.png", width=200)
+    
+    st.markdown("""
+    **感谢您的支持！**
+    
+    您的支持将帮助我们:
+    - 持续更新和完善内容
+    - 开发更多开源教育资源
+    - 支持更多AI教育项目
+    - 为读者提供更好的阅读体验
+    """)
+
 
 def show():
     try:       
@@ -173,7 +202,7 @@ def show():
             """
         )
 
-        tab1, tab2, tab3 = st.tabs(["读者评论", "关于作者", "联系我们"])
+        tab1, tab2, tab3, tab4 = st.tabs(["读者评论", "关于作者", "联系我们", "支持我们"])
         
         with tab1:
             display_comments_section()
@@ -183,6 +212,10 @@ def show():
             
         with tab3:
             show_contact_form()
+            
+        with tab4:
+            show_donation()
+
     except Exception as e:
         st.error(f"发生错误: {str(e)}")
         logging.error(f"Application error: {str(e)}")    
