@@ -169,7 +169,7 @@ def show():
                 *   **面向未来:** 不仅回顾过去，更着眼于 AI 的未来发展趋势。
                 
                 ### [📥 Github下载](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
-                ### [📥 百度网盘下载](https://pan.baidu.com/s/1MwEcstL243vRXls01zN_Yg?pwd=61tw) 
+                ### [📥 百度网盘下载](https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx) 
                 """
             )
             
