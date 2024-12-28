@@ -22,6 +22,7 @@
 - [GitHub下载](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
 - [百度网盘下载](https://pan.baidu.com/s/1MwEcstL243vRXls01zN_Yg?pwd=61tw) (提取码: 61tw)
 
+-------------
 ## 作者
 
 - **刘秀峰** - 丹麦科技大学高级研究员（副教授）
@@ -31,6 +32,7 @@
 - **王智谨** - 厦门集美大学计算机工程学院副教授
   - 研究方向：推荐系统、时间序列预测以及健康与医疗领域的人工智能应用
 
+-------------
 ## 引用
 
 ### BibTeX 格式
@@ -50,11 +52,43 @@
 刘秀峰, & 王智谨. (2024). AI 全景探索：人工智能的未来之旅. 开源出版. 
 https://github.com/xiufengliu/ai-panorama-site
 ```
-
+-------------
 ## 版权信息
 
 本作品采用 [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](https://creativecommons.org/licenses/by-nc-nd/4.0/) 进行许可。
 
+
+-------------
+
+## ❤️ 支持我们
+
+创作不易，如果您觉得这本书对您有价值，欢迎您通过以下方式支持我们继续创作。
+您的每一份支持都是我们持续创作的动力！
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="image/wechat_qr.png" alt="微信支付" width="200"/><br>
+        <b>微信支付</b>
+      </td>
+      <td align="center">
+        <img src="image/alipay_qr.png" alt="支付宝" width="200"/><br>
+        <b>支付宝</b>
+      </td>
+    </tr>
+  </table>
+</div>
+
+**感谢您的支持！**
+
+您的支持将帮助我们:
+- 持续更新和完善内容
+- 开发更多开源教育资源
+- 支持更多AI教育项目
+- 为读者提供更好的阅读体验
+
+-------------
 ## 联系方式
 
 - 刘秀峰：[xiufengliu@gmail.com](mailto:xiufengliu@gmail.com)
