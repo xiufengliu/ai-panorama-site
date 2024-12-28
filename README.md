@@ -2,6 +2,10 @@
 
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
+<p align="center">
+  <img src="image/book_cover.png" alt="AI全景探索：人工智能的未来之旅 - 封面" width="400"/>
+</p>
+
 ## 简介
 
 《AI全景探索：人工智能的未来之旅》是一本开源电子书，旨在帮助读者从技术、哲学和文化等多个视角深入理解人工智能。本书不仅关注技术层面，更着重探讨AI对人类社会的深远影响。
