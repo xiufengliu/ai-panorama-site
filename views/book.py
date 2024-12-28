@@ -202,6 +202,32 @@ def show():
                 
                 ### [📥 Github下载](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
                 ### [📥 百度网盘下载](https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx) 
+
+
+                ### 引用本书
+              <details>
+                <summary>BibTeX 格式</summary>
+                
+                ```bibtex
+                @book{liu2024ai,
+                    title={AI 全景探索：人工智能的未来之旅},
+                    author={刘秀峰 and 王智谨},
+                    year={2024},
+                    publisher={开源出版},
+                    url={https://github.com/xiufengliu/ai-panorama-site},
+                    note={开源电子书}
+                }
+                ```
+                </details>
+                
+                <details>
+                <summary>APA 格式</summary>
+                
+                ```
+                刘秀峰, & 王智谨. (2024). AI 全景探索：人工智能的未来之旅. 开源出版. 
+                https://github.com/xiufengliu/ai-panorama-site
+                ```
+                </details>
                 """
             )
             
