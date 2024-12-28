@@ -98,6 +98,38 @@ def show_authors():
         特别是在医疗健康相关问题上的深度探索。
         """)
 
+def show_copyright():
+    st.markdown("""
+        ## 版权信息
+        
+        **版权所有 © 2024 刘秀峰 & 王智谨**
+        
+        本作品采用 [**Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License**](https://creativecommons.org/licenses/by-nc-nd/4.0/) 许可证进行许可。
+        
+        ![CC License](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)
+        
+        ### 您可以：
+        * **分享**：在任何媒介以任何形式复制和传播本作品
+        * **引用**：在学术或非商业环境下引用本作品，只要提供适当的署名
+        
+        ### 您不得：
+        * **商业化使用**：将本作品用于任何商业目的，包括销售、广告或营利活动
+        * **演绎**：修改、改编或以任何方式创作本作品的衍生作品
+        
+        ### 署名要求：
+        * 任何使用本作品的人必须明确标注作者姓名（刘秀峰 & 王智谨），书名《AI 全景探索：人工智能的未来之旅》，并提供到本书的原始来源或链接。
+        
+        ### 免责声明：
+        * 本书所表达的观点仅代表作者个人，与任何相关机构无关。本书内容仅供参考，作者对任何因使用本书内容而产生的后果不承担任何责任。
+        
+        ### 联系方式：
+        * 电子邮件：[xiufengliu@gmail.com](mailto:xiufengliu@gmail.com), [zhijinecnu@gmail.com](mailto:zhijinecnu@gmail.com)
+        * 网址：[https://xiufengliu.github.io](https://xiufengliu.github.io)
+        
+        有关本许可证的完整条款，请访问：[https://creativecommons.org/licenses/by-nc-nd/4.0/](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+    """)
+
+
 def show_contact_form():
     st.markdown("## 联系作者")
     with st.form(key='contact_form'):
@@ -210,9 +242,10 @@ def show():
         """, unsafe_allow_html=True)
 
         # Tabs with icons and bold text
-        tab1, tab2, tab3, tab4 = st.tabs([
+        tab1, tab2, tab3, tab4, tab5 = st.tabs([
             "💬 读者评论",
             "👥 关于作者",
+            "©️ 版权信息",
             "📧 联系我们",
             "❤️ 支持我们"
         ])
@@ -222,11 +255,14 @@ def show():
             
         with tab2:
             show_authors()
-            
+
         with tab3:
-            show_contact_form()
+            show_copyright()
             
         with tab4:
+            show_contact_form()
+            
+        with tab5:
             show_donation()
 
     except Exception as e:
