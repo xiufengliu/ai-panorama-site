@@ -168,7 +168,8 @@ def show():
                 *   **深度思考:** 引发读者对 AI 伦理、社会影响等问题的深入思考。
                 *   **面向未来:** 不仅回顾过去，更着眼于 AI 的未来发展趋势。
                 
-                ### [📥 下载本书 PDF](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
+                ### [📥 Github下载](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
+                ### [📥 百度网盘下载](https://pan.baidu.com/s/1MwEcstL243vRXls01zN_Yg?pwd=61tw) 
                 """
             )
             
