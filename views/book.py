@@ -167,16 +167,11 @@ def show():
                 *   **开源协作:** 采用开放的协作模式, 任何人都可以参与贡献。
                 *   **深度思考:** 引发读者对 AI 伦理、社会影响等问题的深入思考。
                 *   **面向未来:** 不仅回顾过去，更着眼于 AI 的未来发展趋势。
-                """
-            )
-            st.markdown("""
-                ## 欢迎来到《AI全景探索》的世界！
-                ...existing code...
-                *   **面向未来:** 不仅回顾过去，更着眼于 AI 的未来发展趋势。
                 
                 ### [📥 下载本书 PDF](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
                 """
             )
+            
 
         # --- Book Introduction ---
         st.markdown("---")
