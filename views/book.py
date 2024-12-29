@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_pdf_viewer import pdf_viewer
 import logging
 from pathlib import Path
 from utils.database import init_db, get_comments, add_comment, add_message, get_next_anon_number
@@ -202,11 +203,14 @@ def show():
                 
                 ### [📥 Github下载](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
                 ### [📥 百度网盘下载](https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx) 
-
+                ### [📖 在线阅读](javascript:void(0);)
 
                 ### 引用本书
                 """
             )
+            pdf_file_path = "data/AI_book_v1.pdf"
+            pdf_viewer(pdf_file_path)
+
             with st.expander("BibTeX 格式"):
                 st.code("""@book{liu2024ai,
                     title={AI 全景探索：人工智能的未来之旅},
