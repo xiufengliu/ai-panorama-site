@@ -219,7 +219,7 @@ def show():
                 """
             )
             # Create two columns for download buttons
-            dl_col1, dl_col2 = st.columns(2)
+            dl_col1, dl_col2, dl_col3 = st.columns(3)
             
             with dl_col1:
                 # Local download button
@@ -241,7 +241,9 @@ def show():
                 github_url = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
                 st.link_button("📥 Github下载", github_url)
 
-            
+            #with dl_col3:
+            #    pan_url = "https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx"
+            #    st.link_button("📥 网盘下载", pan_url)
 
         # --- Book Introduction ---
         st.markdown("---")
