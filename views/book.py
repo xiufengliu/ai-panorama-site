@@ -186,7 +186,7 @@ def show():
         col1, col2 = st.columns([1, 2])
 
         with col1:
-            st.image("image/book_cover.png", caption="Book Cover", width=400)
+            st.image("image/book_cover.png", caption="Book Cover", use_column_width=True)
             st.markdown("### 引用本书")
             with st.expander("BibTeX 格式"):
                 st.code("""@book{liu2024ai,
