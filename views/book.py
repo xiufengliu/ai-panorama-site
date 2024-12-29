@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_pdf_viewer import pdf_viewer
 import base64
-import logging
+import logging, os
 from pathlib import Path
 from utils.database import init_db, get_comments, add_comment, add_message, get_next_anon_number
 
@@ -223,16 +223,16 @@ def show():
             )
             pdf_file_path = "data/AI_book_v1.pdf"
             if st.button("📖 在线阅读"):
-                try:
-                    with open(pdf_file_path, "rb") as pdf_file:
-                        base64_pdf = base64.b64encode(pdf_file.read()).decode('utf-8')
-                    # Embed PDF viewer using HTML
-                    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
-                    st.markdown(pdf_display, unsafe_allow_html=True)
-                except FileNotFoundError:
-                    st.error("PDF文件未找到，请检查文件路径。")
-                except Exception as e:
-                    st.error(f"发生错误: {str(e)}")
+                if os.path.exists(pdf_file_path):
+                    try:
+                        with open(pdf_file_path, "rb") as pdf_file:
+                            base64_pdf = base64.b64encode(pdf_file.read()).decode('utf-8')
+                        pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" type="application/pdf"></iframe>'
+                        st.markdown(pdf_display, unsafe_allow_html=True)
+                    except Exception as e:
+                        st.error(f"Error displaying PDF: {str(e)}")
+                else:
+                    st.error("PDF file not found. Please check the file path.")
 
             
 
