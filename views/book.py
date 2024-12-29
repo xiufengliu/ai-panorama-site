@@ -216,23 +216,30 @@ def show():
                 *   **开源协作:** 采用开放的协作模式, 任何人都可以参与贡献。
                 *   **深度思考:** 引发读者对 AI 伦理、社会影响等问题的深入思考。
                 *   **面向未来:** 不仅回顾过去，更着眼于 AI 的未来发展趋势。
-                
-                ### [📥 Github下载](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
                 """
             )
-            # Add local file download
-            pdf_file_path = "data/AI_book_v1.pdf"
-            try:
-                with open(pdf_file_path, "rb") as pdf_file:
-                    PDFbyte = pdf_file.read()
-                st.download_button(
-                    label="📥 本地下载",
-                    data=PDFbyte,
-                    file_name="AI全景探索.pdf",
-                    mime='application/pdf'
-                )
-            except FileNotFoundError:
-                st.error("PDF文件未找到")
+            # Create two columns for download buttons
+            dl_col1, dl_col2 = st.columns(2)
+            
+            with dl_col1:
+                # Local download button
+                pdf_file_path = "data/AI_book_v1.pdf"
+                try:
+                    with open(pdf_file_path, "rb") as pdf_file:
+                        PDFbyte = pdf_file.read()
+                    st.download_button(
+                        label="📥 本地下载",
+                        data=PDFbyte,
+                        file_name="AI全景探索.pdf",
+                        mime='application/pdf'
+                    )
+                except FileNotFoundError:
+                    st.error("PDF文件未找到")
+            
+            with dl_col2:
+                # Github download button
+                github_url = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
+                st.link_button("📥 Github下载", github_url)
 
             
 
