@@ -218,21 +218,21 @@ def show():
                 *   **面向未来:** 不仅回顾过去，更着眼于 AI 的未来发展趋势。
                 
                 ### [📥 Github下载](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
-                ### [📥 百度网盘下载](https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx) 
                 """
             )
+            # Add local file download
             pdf_file_path = "data/AI_book_v1.pdf"
-            if st.button("📖 在线阅读"):
-                if os.path.exists(pdf_file_path):
-                    try:
-                        with open(pdf_file_path, "rb") as pdf_file:
-                            base64_pdf = base64.b64encode(pdf_file.read()).decode('utf-8')
-                        pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" type="application/pdf"></iframe>'
-                        st.markdown(pdf_display, unsafe_allow_html=True)
-                    except Exception as e:
-                        st.error(f"Error displaying PDF: {str(e)}")
-                else:
-                    st.error("PDF file not found. Please check the file path.")
+            try:
+                with open(pdf_file_path, "rb") as pdf_file:
+                    PDFbyte = pdf_file.read()
+                st.download_button(
+                    label="📥 本地下载",
+                    data=PDFbyte,
+                    file_name="AI全景探索.pdf",
+                    mime='application/pdf'
+                )
+            except FileNotFoundError:
+                st.error("PDF文件未找到")
 
             
 
