@@ -187,6 +187,21 @@ def show():
 
         with col1:
             st.image("image/book_cover.png", caption="Book Cover", width=400)
+            st.markdown("### 引用本书")
+            with st.expander("BibTeX 格式"):
+                st.code("""@book{liu2024ai,
+                    title={AI 全景探索：人工智能的未来之旅},
+                    author={刘秀峰 and 王智谨},
+                    year={2024},
+                    publisher={开源出版},
+                    url={https://github.com/xiufengliu/ai-panorama-site},
+                    note={开源电子书}
+                }""", language="bibtex")
+
+            with st.expander("APA 格式"):
+                st.code("""刘秀峰, & 王智谨. (2024). AI 全景探索：人工智能的未来之旅. 开源出版. 
+        https://github.com/xiufengliu/ai-panorama-site""")
+            
 
         with col2:
             st.markdown(
@@ -219,20 +234,6 @@ def show():
                 except Exception as e:
                     st.error(f"发生错误: {str(e)}")
 
-            st.markdown("### 引用本书")
-            with st.expander("BibTeX 格式"):
-                st.code("""@book{liu2024ai,
-                    title={AI 全景探索：人工智能的未来之旅},
-                    author={刘秀峰 and 王智谨},
-                    year={2024},
-                    publisher={开源出版},
-                    url={https://github.com/xiufengliu/ai-panorama-site},
-                    note={开源电子书}
-                }""", language="bibtex")
-
-            with st.expander("APA 格式"):
-                st.code("""刘秀峰, & 王智谨. (2024). AI 全景探索：人工智能的未来之旅. 开源出版. 
-        https://github.com/xiufengliu/ai-panorama-site""")
             
 
         # --- Book Introduction ---
