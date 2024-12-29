@@ -203,7 +203,7 @@ def show():
                 
                 ### [📥 Github下载](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
                 ### [📥 百度网盘下载](https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx) 
-                ### [📖 在线阅读](javascript:void(0);)
+                ### [📖 在线阅读](#)
 
                 ### 引用本书
                 """
