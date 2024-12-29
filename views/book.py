@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_pdf_viewer import pdf_viewer
+import base64
 import logging
 from pathlib import Path
 from utils.database import init_db, get_comments, add_comment, add_message, get_next_anon_number
