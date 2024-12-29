@@ -203,13 +203,24 @@ def show():
                 
                 ### [📥 Github下载](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
                 ### [📥 百度网盘下载](https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx) 
-                ### [📖 在线阅读](#)
 
                 ### 引用本书
                 """
             )
+
             pdf_file_path = "data/AI_book_v1.pdf"
-            pdf_viewer(pdf_file_path)
+            
+            if st.button("📖 在线阅读"):
+                with open(pdf_file_path, "rb") as pdf_file:
+                    PDFbyte = pdf_file.read()
+                st.download_button(
+                    label="Download PDF",
+                    data=PDFbyte,
+                    file_name="AI_book_v1.pdf",
+                    mime='application/octet-stream'
+                )
+                st.write("PDF预览：")
+                pdf_viewer(pdf_file_path)
 
             with st.expander("BibTeX 格式"):
                 st.code("""@book{liu2024ai,
