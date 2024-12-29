@@ -203,25 +203,22 @@ def show():
                 
                 ### [📥 Github下载](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
                 ### [📥 百度网盘下载](https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx) 
-
-                ### 引用本书
                 """
             )
-
             pdf_file_path = "data/AI_book_v1.pdf"
-            
             if st.button("📖 在线阅读"):
-                with open(pdf_file_path, "rb") as pdf_file:
-                    PDFbyte = pdf_file.read()
-                st.download_button(
-                    label="Download PDF",
-                    data=PDFbyte,
-                    file_name="AI_book_v1.pdf",
-                    mime='application/octet-stream'
-                )
-                st.write("PDF预览：")
-                pdf_viewer(pdf_file_path)
+                try:
+                    with open(pdf_file_path, "rb") as pdf_file:
+                        base64_pdf = base64.b64encode(pdf_file.read()).decode('utf-8')
+                    # Embed PDF viewer using HTML
+                    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
+                    st.markdown(pdf_display, unsafe_allow_html=True)
+                except FileNotFoundError:
+                    st.error("PDF文件未找到，请检查文件路径。")
+                except Exception as e:
+                    st.error(f"发生错误: {str(e)}")
 
+            st.markdown("### 引用本书")
             with st.expander("BibTeX 格式"):
                 st.code("""@book{liu2024ai,
                     title={AI 全景探索：人工智能的未来之旅},
