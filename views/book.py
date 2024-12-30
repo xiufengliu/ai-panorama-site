@@ -327,9 +327,9 @@ def show():
             stats_text = []
             for download_type, count in stats:
                 display_type = download_types.get(download_type, download_type)
-                stats_text.append(f"**{display_type}:** {count}次")
+                stats_text.append(f"{display_type}: {count}次")
 
-            st.markdown(f"<small>下载统计: **总下载次数:** {total} | {' | '.join(stats_text)}</small>", unsafe_allow_html=True)
+            st.markdown(f"<small>**下载统计**: 总下载次数: {total} | {' | '.join(stats_text)}</small>", unsafe_allow_html=True)
             
         
     
