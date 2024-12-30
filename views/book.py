@@ -221,18 +221,19 @@ def show():
             # Create two columns for download buttons
             dl_col1, dl_col2, dl_col3 = st.columns(3)
             pdf_file_path = "data/AI_book_v1.pdf"
-            try:
-                with open(pdf_file_path, "rb") as pdf_file:
-                    PDFbyte = pdf_file.read()
-                if st.download_button(
-                    label="📥 本地下载",
-                    data=PDFbyte,
-                    file_name="AI全景探索.pdf",
-                    mime='application/pdf'
-                ):
-                    increment_downloads("local")
-            except FileNotFoundError:
-                st.error("PDF文件未找到")
+            with dl_col1:
+                try:
+                    with open(pdf_file_path, "rb") as pdf_file:
+                        PDFbyte = pdf_file.read()
+                    if st.download_button(
+                        label="📥 本地下载",
+                        data=PDFbyte,
+                        file_name="AI全景探索.pdf",
+                        mime='application/pdf'
+                    ):
+                        increment_downloads("local")
+                except FileNotFoundError:
+                    st.error("PDF文件未找到")
         
         with dl_col2:
             # Github download button
