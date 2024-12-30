@@ -17,7 +17,8 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-
+if 'github_download_clicked' not in st.session_state:
+    st.session_state.github_download_clicked = False
 
 def display_reply(reply):
     st.write(f"↳ **{reply[1]}**: {reply[3]}")
@@ -235,18 +236,13 @@ def show():
                 except FileNotFoundError:
                     st.error("PDF文件未找到")
         
+        # In the download section
         with dl_col2:
-            # Github download button
             github_url = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
-            if st.button("📥 Github下载"):  # Changed from link_button to button
-                increment_downloads("github")
-                # Redirect to download URL using JavaScript
-                js = f"""
-                <script>
-                    window.open('{github_url}', '_blank').focus();
-                </script>
-                """
-                st.components.v1.html(js)
+            if st.link_button("📥 Github下载", github_url, type='primary'):
+                if not st.session_state.github_download_clicked:
+                    increment_downloads("github")
+                    st.session_state.github_download_clicked = True
 
             #with dl_col3:
             #    pan_url = "https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx"
