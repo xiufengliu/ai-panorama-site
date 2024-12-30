@@ -186,6 +186,8 @@ def show_donation():
 def show():
     try:       
         init_db()
+        if 'github_download_clicked' not in st.session_state:
+            st.session_state.github_download_clicked = False
         # --- Header Section ---
         st.title("AI全景探索：人工智能的未来之旅")
         st.markdown("### 一本开源书籍，探索人工智能的未来")
