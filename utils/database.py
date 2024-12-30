@@ -164,7 +164,12 @@ def get_download_stats():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
+        # Get total downloads
+        cursor.execute("SELECT SUM(count) as total FROM downloads")
+        total = cursor.fetchone()[0]
+        # Get individual stats
         cursor.execute("SELECT download_type, count FROM downloads")
-        return cursor.fetchall()
+        stats = cursor.fetchall()
+        return total, stats
     finally:
-        conn.close()    
+        conn.close()

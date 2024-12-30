@@ -305,12 +305,22 @@ def show():
             show_contact_form()
             
         # Show download statistics at bottom
-        stats = get_download_stats()
-        total_downloads = sum(count for _, count in stats)
+    
+        total, stats = get_download_stats()
         
         st.markdown("---")
         st.markdown("### 下载统计")
-        st.markdown(f"**总下载次数:** {total_downloads}")
+        st.markdown(f"**总下载次数:** {total}")
+        
+        # Display individual stats with Chinese labels
+        download_types = {
+            'local': '本地下载',
+            'github': 'Github下载'
+        }
+        
+        for download_type, count in stats:
+            display_type = download_types.get(download_type, download_type)
+            st.markdown(f"- **{display_type}:** {count}次")
     except Exception as e:
         st.error(f"发生错误: {str(e)}")
         logging.error(f"Application error: {str(e)}")    
