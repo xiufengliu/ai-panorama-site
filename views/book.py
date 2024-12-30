@@ -253,10 +253,9 @@ def show():
         # In the download section
         with dl_col2:
             github_url = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
-            st.link_button("📥 Github下载", 
-                          github_url, 
-                          type='primary',
-                          on_click=download_clicked)
+            if st.button("📥 Github下载", type='primary'):
+                download_clicked()
+                st.markdown(f'<meta http-equiv="refresh" content="0;url={github_url}">', unsafe_allow_html=True)
 
             #with dl_col3:
             #    pan_url = "https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx"
