@@ -34,6 +34,13 @@ def init_db():
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         """)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS downloads (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                download_type TEXT NOT NULL,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
         conn.commit()
     finally:
         conn.close()
@@ -135,3 +142,28 @@ def get_messages():
         return cursor.fetchall()
     finally:
         conn.close()
+
+def increment_downloads(download_type):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO downloads (download_type) VALUES (?)",
+            (download_type,)
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+def get_download_stats():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT download_type, COUNT(*) as count 
+            FROM downloads 
+            GROUP BY download_type
+        """)
+        return cursor.fetchall()
+    finally:
+        conn.close()        

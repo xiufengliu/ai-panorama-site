@@ -3,7 +3,7 @@ from streamlit_pdf_viewer import pdf_viewer
 import base64
 import logging, os
 from pathlib import Path
-from utils.database import init_db, get_comments, add_comment, add_message, get_next_anon_number
+from utils.database import init_db, get_comments, add_comment, add_message, get_next_anon_number,increment_downloads,get_download_stats
 
 # Configure logging
 logging.basicConfig(
@@ -220,26 +220,25 @@ def show():
             )
             # Create two columns for download buttons
             dl_col1, dl_col2, dl_col3 = st.columns(3)
-            
-            with dl_col1:
-                # Local download button
-                pdf_file_path = "data/AI_book_v1.pdf"
-                try:
-                    with open(pdf_file_path, "rb") as pdf_file:
-                        PDFbyte = pdf_file.read()
-                    st.download_button(
-                        label="📥 本地下载",
-                        data=PDFbyte,
-                        file_name="AI全景探索.pdf",
-                        mime='application/pdf'
-                    )
-                except FileNotFoundError:
-                    st.error("PDF文件未找到")
-            
-            with dl_col2:
-                # Github download button
-                github_url = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
-                st.link_button("📥 Github下载", github_url)
+            pdf_file_path = "data/AI_book_v1.pdf"
+            try:
+                with open(pdf_file_path, "rb") as pdf_file:
+                    PDFbyte = pdf_file.read()
+                if st.download_button(
+                    label="📥 本地下载",
+                    data=PDFbyte,
+                    file_name="AI全景探索.pdf",
+                    mime='application/pdf'
+                ):
+                    increment_downloads("local")
+            except FileNotFoundError:
+                st.error("PDF文件未找到")
+        
+        with dl_col2:
+            # Github download button
+            github_url = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
+            if st.link_button("📥 Github下载", github_url):
+                increment_downloads("github")
 
             #with dl_col3:
             #    pan_url = "https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx"
@@ -304,7 +303,13 @@ def show():
         with tab5:
             show_contact_form()
             
-
+        # Show download statistics at bottom
+        stats = get_download_stats()
+        total_downloads = sum(count for _, count in stats)
+        
+        st.markdown("---")
+        st.markdown("### 下载统计")
+        st.markdown(f"**总下载次数:** {total_downloads}")
     except Exception as e:
         st.error(f"发生错误: {str(e)}")
         logging.error(f"Application error: {str(e)}")    
