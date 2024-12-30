@@ -324,8 +324,8 @@ def show():
     
         total, stats = get_download_stats()
         
-        st.markdown("---")
-        st.markdown("### 下载统计")
+        #st.markdown("---")
+        st.markdown("#### 下载统计")
         st.markdown(f"**总下载次数:** {total}")
         
         # Display individual stats with Chinese labels
