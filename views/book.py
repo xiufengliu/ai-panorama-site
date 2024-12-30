@@ -319,20 +319,21 @@ def show():
             
         with tab5:
             show_contact_form()
-            
-        # Show download statistics at bottom
-    
-        total, stats = get_download_stats()
-        download_types = {
-            'local': '本地下载',
-            'github': 'Github下载'
-        }
-        stats_text = []
-        for download_type, count in stats:
-            display_type = download_types.get(download_type, download_type)
-            stats_text.append(f"**{display_type}:** {count}次")
+            total, stats = get_download_stats()
+            download_types = {
+                'local': '本地下载',
+                'github': 'Github下载'
+            }
+            stats_text = []
+            for download_type, count in stats:
+                display_type = download_types.get(download_type, download_type)
+                stats_text.append(f"**{display_type}:** {count}次")
 
-        st.markdown(f"<small>下载统计: **总下载次数:** {total} | {' | '.join(stats_text)}</small>", unsafe_allow_html=True)
+            st.markdown(f"<small>下载统计: **总下载次数:** {total} | {' | '.join(stats_text)}</small>", unsafe_allow_html=True)
+            
+        
+    
+        
     except Exception as e:
         st.error(f"发生错误: {str(e)}")
         logging.error(f"Application error: {str(e)}")    
