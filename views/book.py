@@ -183,6 +183,11 @@ def show_donation():
     """)
 
 
+def download_clicked():
+    if not st.session_state.github_download_clicked:
+        increment_downloads("github")
+        st.session_state.github_download_clicked = True
+
 def show():
     try:       
         init_db()
@@ -248,10 +253,10 @@ def show():
         # In the download section
         with dl_col2:
             github_url = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
-            if st.link_button("📥 Github下载", github_url, type='primary'):
-                if not st.session_state['github_download_clicked']:
-                    increment_downloads("github")
-                    st.session_state['github_download_clicked'] = True
+            st.link_button("📥 Github下载", 
+                          github_url, 
+                          type='primary',
+                          on_click=download_clicked)
 
             #with dl_col3:
             #    pan_url = "https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx"
