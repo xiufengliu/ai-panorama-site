@@ -36,10 +36,14 @@ def init_db():
         """)
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS downloads (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                download_type TEXT NOT NULL,
-                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+                download_type TEXT PRIMARY KEY,
+                count INTEGER DEFAULT 0
             )
+        """)
+        # Initialize download types if not exists
+        cursor.execute("""
+            INSERT OR IGNORE INTO downloads (download_type, count) 
+            VALUES ('local', 0), ('github', 0)
         """)
         conn.commit()
     finally:
@@ -147,10 +151,11 @@ def increment_downloads(download_type):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(
-            "INSERT INTO downloads (download_type) VALUES (?)",
-            (download_type,)
-        )
+        cursor.execute("""
+            UPDATE downloads 
+            SET count = count + 1 
+            WHERE download_type = ?
+        """, (download_type,))
         conn.commit()
     finally:
         conn.close()
@@ -159,11 +164,7 @@ def get_download_stats():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("""
-            SELECT download_type, COUNT(*) as count 
-            FROM downloads 
-            GROUP BY download_type
-        """)
+        cursor.execute("SELECT download_type, count FROM downloads")
         return cursor.fetchall()
     finally:
-        conn.close()        
+        conn.close()    
