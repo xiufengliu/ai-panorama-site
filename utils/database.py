@@ -43,7 +43,7 @@ def init_db():
         # Initialize download types if not exists
         cursor.execute("""
             INSERT OR IGNORE INTO downloads (download_type, count) 
-            VALUES ('local', 0), ('github', 0)
+            VALUES ('local', 0), ('github', 0), ('baidu', 0)
         """)
         conn.commit()
     finally:

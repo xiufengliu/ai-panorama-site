@@ -188,11 +188,18 @@ def download_clicked():
         increment_downloads("github")
         st.session_state.github_download_clicked = True
 
+def baidu_download_clicked():
+    if not st.session_state.baidu_download_clicked:
+        increment_downloads("baidu")
+        st.session_state.baidu_download_clicked = True
+
 def show():
     try:       
         init_db()
         if 'github_download_clicked' not in st.session_state:
             st.session_state.github_download_clicked = False
+        if 'baidu_download_clicked' not in st.session_state:
+            st.session_state.baidu_download_clicked = False
         # --- Header Section ---
         st.title("AI全景探索：人工智能的未来之旅")
         st.markdown("### 一本开源书籍，探索人工智能的未来")
@@ -257,9 +264,11 @@ def show():
                 download_clicked()
                 st.markdown(f'<meta http-equiv="refresh" content="0;url={github_url}">', unsafe_allow_html=True)
 
-            #with dl_col3:
-            #    pan_url = "https://pan.baidu.com/s/1XNHcjESlFOnnFxpea-3p8A?pwd=9gvx"
-            #    st.link_button("📥 网盘下载", pan_url)
+        with dl_col3:
+            pan_url = "https://pan.baidu.com/s/1djntClJqq4gNh3dhyevavQ?pwd=5ap8"
+            if st.button("📥 网盘下载"):
+                baidu_download_clicked()
+                st.markdown(f'<meta http-equiv="refresh" content="0;url={pan_url}">', unsafe_allow_html=True)
 
         # --- Book Introduction ---
         st.markdown("---")
@@ -323,7 +332,8 @@ def show():
             total, stats = get_download_stats()
             download_types = {
                 'local': '本地下载',
-                'github': 'Github下载'
+                'github': 'Github下载',
+                'baidu': '网盘下载'
             }
             stats_text = []
             for download_type, count in stats:
