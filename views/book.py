@@ -265,7 +265,7 @@ def show():
                 st.markdown(f'<meta http-equiv="refresh" content="0;url={github_url}">', unsafe_allow_html=True)
 
         with dl_col3:
-            pan_url = "https://pan.baidu.com/s/1djntClJqq4gNh3dhyevavQ?pwd=5ap8"
+            pan_url = "https://pan.baidu.com/s/1VSgWkS6_30FeWpXEpK2jbA?pwd=pr5g"
             if st.button("📥 网盘下载"):
                 baidu_download_clicked()
                 st.markdown(f'<meta http-equiv="refresh" content="0;url={pan_url}">', unsafe_allow_html=True)
