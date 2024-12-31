@@ -259,7 +259,7 @@ def show():
         
         # In the download section
         with dl_col2:
-            pan_url = "https://pan.baidu.com/s/1udzIWZLiAKOhHzLO9PAAjg?pwd=ku3m"
+            pan_url = "https://pan.baidu.com/s/12G0be5tOJRfDHaVNwTA0-Q?pwd=wyj6"
             if st.button("📥 网盘下载"):
                 baidu_download_clicked()
                 st.markdown(f'<meta http-equiv="refresh" content="0;url={pan_url}">', unsafe_allow_html=True)          
