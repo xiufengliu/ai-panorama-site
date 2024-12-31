@@ -183,7 +183,7 @@ def show_donation():
     """)
 
 
-def download_clicked():
+def github_download_clicked():
     if not st.session_state.github_download_clicked:
         increment_downloads("github")
         st.session_state.github_download_clicked = True
@@ -259,16 +259,16 @@ def show():
         
         # In the download section
         with dl_col2:
-            github_url = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
-            if st.button("📥 Github下载"):
-                download_clicked()
-                st.markdown(f'<meta http-equiv="refresh" content="0;url={github_url}">', unsafe_allow_html=True)
-
-        with dl_col3:
             pan_url = "https://pan.baidu.com/s/1udzIWZLiAKOhHzLO9PAAjg?pwd=ku3m"
             if st.button("📥 网盘下载"):
                 baidu_download_clicked()
-                st.markdown(f'<meta http-equiv="refresh" content="0;url={pan_url}">', unsafe_allow_html=True)
+                st.markdown(f'<meta http-equiv="refresh" content="0;url={pan_url}">', unsafe_allow_html=True)          
+
+        with dl_col3:
+            github_url = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
+            if st.button("📥 Github下载"):
+                github_download_clicked()
+                st.markdown(f'<meta http-equiv="refresh" content="0;url={github_url}">', unsafe_allow_html=True)
 
         # --- Book Introduction ---
         st.markdown("---")
@@ -332,8 +332,8 @@ def show():
             total, stats = get_download_stats()
             download_types = {
                 'local': '本地下载',
-                'github': 'Github下载',
-                'baidu': '网盘下载'
+                'baidu': '网盘下载',
+                'github': 'Github下载'
             }
             stats_text = []
             for download_type, count in stats:
