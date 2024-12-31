@@ -101,7 +101,7 @@ def show_authors():
     with col3:
         st.image("image/zhijinwang.jpg", width=200)
     with col4:
-        st.markdown("### 王智谨 ([个人主页](https://zhijinwang.github.io))")
+        st.markdown("### 王智谨 ([个人主页](https://freepose.github.io/))")
         st.markdown("""
         王智谨现为中国厦门集美大学计算机工程学院副教授。2016年，他获得华东师范大学计算机科学与技术系博士学位。
         他的研究兴趣包括推荐系统、时间序列预测以及健康与医疗领域的人工智能应用。他致力于推动人工智能技术在实际应用中的创新发展，
