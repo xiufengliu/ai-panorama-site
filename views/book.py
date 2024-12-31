@@ -86,7 +86,7 @@ def show_authors():
     with col1:
         st.image("image/Xiufeng_liu.png", width=200)
     with col2:
-        st.markdown("### 刘秀峰 (Xiufeng Liu)")
+        st.markdown("### 刘秀峰 ([个人主页](https://xiufengliu.github.io))")
         st.markdown("""
         刘秀峰现为丹麦科技大学（Technical University of Denmark）技术、管理与经济学部高级研究员(副教授)。
         2012年，他获得丹麦奥尔堡大学计算机科学博士学位。2013年至2014年，他在加拿大滑铁卢大学从事博士后研究，
@@ -101,7 +101,7 @@ def show_authors():
     with col3:
         st.image("image/zhijinwang.jpg", width=200)
     with col4:
-        st.markdown("### 王智谨 (Zhijin Wang)")
+        st.markdown("### 王智谨 ([个人主页](https://zhijinwang.github.io))")
         st.markdown("""
         王智谨现为中国厦门集美大学计算机工程学院副教授。2016年，他获得华东师范大学计算机科学与技术系博士学位。
         他的研究兴趣包括推荐系统、时间序列预测以及健康与医疗领域的人工智能应用。他致力于推动人工智能技术在实际应用中的创新发展，
