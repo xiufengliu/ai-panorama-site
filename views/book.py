@@ -14,7 +14,7 @@ DOWNLOAD_TYPES = {
 
 PDF_FILE_PATH = "data/AI_book_v1.pdf"
 GITHUB_URL = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
-BAIDU_URL = "https://pan.baidu.com/s/1I0lqoGm2ZqiCEqSoiYcSIw?pwd=abum"
+BAIDU_URL = "https://pan.baidu.com/s/1xmtGUGVQVF3nxqXKET3QSA?pwd=t5jd"
 PDF_FILENAME = "AI_book_v1.pdf"
 
 
