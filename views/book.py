@@ -14,8 +14,10 @@ DOWNLOAD_TYPES = {
 
 PDF_FILE_PATH = "data/AI_book_v1.pdf"
 GITHUB_URL = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
-BAIDU_URL = "https://pan.baidu.com/s/12G0be5tOJRfDHaVNwTA0-Q?pwd=wyj6"
+BAIDU_URL = "https://pan.baidu.com/s/1I0lqoGm2ZqiCEqSoiYcSIw?pwd=abum"
 PDF_FILENAME = "AI_book_v1.pdf"
+
+
 
 # Configure logging
 logging.basicConfig(
