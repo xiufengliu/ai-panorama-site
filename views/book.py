@@ -3,7 +3,7 @@ from streamlit_pdf_viewer import pdf_viewer
 import base64
 import logging, os
 from pathlib import Path
-from utils.database import init_db, get_comments, add_comment, add_message, get_next_anon_number,increment_downloads,get_download_stats
+from utils.database import init_db, get_comments, add_comment, add_message, get_next_anon_number, track_download, get_download_stats
 
 # Constants should be moved to top of file
 DOWNLOAD_TYPES = {
@@ -78,7 +78,12 @@ def display_comments_section():
     and the comment submission form.
     """
     st.markdown("## 读者评论")
-    comments = get_comments()
+    try:
+        comments = get_comments()
+    except Exception as e:
+        st.error(f"Error loading comments: {e}")
+        logging.error(f"Error loading comments: {e}")
+        return
     
     for comment in comments:
         with st.container():
@@ -210,15 +215,6 @@ def show_donation():
     """)
 
 
-def track_download(download_type):
-    """
-    Track download clicks for different sources.
-    """
-    state_key = f'{download_type}_download_clicked'
-    if not st.session_state.get(state_key, False):
-        increment_downloads(download_type)
-        st.session_state[state_key] = True
-
 @st.cache_data
 def get_book_content():
     """
@@ -285,14 +281,21 @@ def show():
             dl_col1, dl_col2, dl_col3 = st.columns([1, 1, 1])
             with dl_col1:
                 if os.path.exists(PDF_FILE_PATH):
-                    with open(PDF_FILE_PATH, "rb") as pdf_file:
-                        st.download_button(
-                            label="📥 本地下载",
-                            data=pdf_file,
-                            file_name=PDF_FILENAME,
-                            mime="application/pdf",
-                            on_click=lambda: track_download("local")
-                        )
+                    try:
+                        with open(PDF_FILE_PATH, "rb") as pdf_file:
+                            st.download_button(
+                                label="📥 本地下载",
+                                data=pdf_file,
+                                file_name=PDF_FILENAME,
+                                mime="application/pdf",
+                                on_click=lambda: track_download("local")
+                            )
+                    except IOError as e:
+                        st.error(f"Error reading PDF file: {e}")
+                        logging.error(f"Error reading PDF file: {e}")
+                else:
+                    st.error(f"PDF file not found at {PDF_FILE_PATH}")
+                    logging.error(f"PDF file not found at {PDF_FILE_PATH}")
 
             with dl_col2:
                 if st.button("📥 网盘下载"):

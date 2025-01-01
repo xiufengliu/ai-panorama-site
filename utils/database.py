@@ -5,6 +5,8 @@ from pathlib import Path
 DB_NAME = "aibook.db"
 DB_PATH = Path(__file__).parent / DB_NAME
 
+VALID_DOWNLOAD_TYPES = {'local', 'github', 'baidu'}
+
 def get_db_connection():
     return sqlite3.connect(DB_PATH)
 
@@ -70,6 +72,10 @@ def add_comment(name, email, comment, parent_id=None):
             (name, email, comment, parent_id)
         )
         conn.commit()
+        return True
+    except sqlite3.Error as e:
+        logging.error(f"Error adding comment: {e}")
+        return False
     finally:
         conn.close()
 
@@ -133,6 +139,10 @@ def add_message(name, email, message):
             (name, email, message)
         )
         conn.commit()
+        return True
+    except sqlite3.Error as e:
+        logging.error(f"Error adding message: {e}")
+        return False
     finally:
         conn.close()
 
@@ -147,7 +157,10 @@ def get_messages():
     finally:
         conn.close()
 
-def increment_downloads(download_type):
+def track_download(download_type):
+    if download_type not in VALID_DOWNLOAD_TYPES:
+        logging.error(f"Invalid download type: {download_type}")
+        return False
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -157,6 +170,10 @@ def increment_downloads(download_type):
             WHERE download_type = ?
         """, (download_type,))
         conn.commit()
+        return True
+    except sqlite3.Error as e:
+        logging.error(f"Error tracking download: {e}")
+        return False
     finally:
         conn.close()
 
