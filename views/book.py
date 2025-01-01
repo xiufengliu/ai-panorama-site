@@ -5,6 +5,18 @@ import logging, os
 from pathlib import Path
 from utils.database import init_db, get_comments, add_comment, add_message, get_next_anon_number,increment_downloads,get_download_stats
 
+# Constants should be moved to top of file
+DOWNLOAD_TYPES = {
+    'local': '本地下载',
+    'baidu': '网盘下载',
+    'github': 'Github下载'
+}
+
+PDF_FILE_PATH = "data/AI_book_v1.pdf"
+GITHUB_URL = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
+BAIDU_URL = "https://pan.baidu.com/s/12G0be5tOJRfDHaVNwTA0-Q?pwd=wyj6"
+PDF_FILENAME = "AI全景图2024.pdf"
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -50,7 +62,21 @@ def display_comment(comment):
                 with col2:
                     display_reply(reply)
 
+def validate_comment(text):
+    """
+    Validate comment text for length and content.
+    """
+    if not text or len(text.strip()) == 0:
+        return False, "评论内容不能为空"
+    if len(text) > 1000:  # Example limit
+        return False, "评论内容过长"
+    return True, ""
+
 def display_comments_section():
+    """
+    Displays the comments section including all comments, replies,
+    and the comment submission form.
+    """
     st.markdown("## 读者评论")
     comments = get_comments()
     
@@ -63,7 +89,8 @@ def display_comments_section():
         comment_text = st.text_area("添加您的评论:", key="new_comment")
         
         if st.form_submit_button("提交"):
-            if comment_text:
+            is_valid, error_message = validate_comment(comment_text)
+            if is_valid:
                 try:
                     next_num = get_next_anon_number()
                     name = f"anon_{next_num}"
@@ -76,7 +103,7 @@ def display_comments_section():
                 except Exception as e:
                     st.error(f"评论失败: {str(e)}")
             else:
-                st.error("请输入评论内容")
+                st.error(error_message)
 
 def show_authors():
     st.markdown("## 关于作者")
@@ -130,7 +157,7 @@ def show_copyright():
         * 任何使用本作品的人必须明确标注作者姓名（刘秀峰 & 王智谨），书名《AI 全景探索：人工智能的未来之旅》，并提供到本书的原始来源或链接。
         
         ### 免责声明：
-        * 本书所表达的观点仅代表作者个人，与任何相关机构无关。本书内容仅供参考，作者对任何因使用本书内容而产生的后果不承担任何责任。
+        * 本书所表达的观点仅代表个人，与任何相关机构无关。本书内容仅供参考，作者对任何因使用本书内容而产生的后果不承担任何责任。
         
         ### 联系方式：
         * 电子邮件：[xiufengliu@gmail.com](mailto:xiufengliu@gmail.com), [zhijinecnu@gmail.com](mailto:zhijinecnu@gmail.com)
@@ -183,17 +210,31 @@ def show_donation():
     """)
 
 
-def github_download_clicked():
-    if not st.session_state.github_download_clicked:
-        increment_downloads("github")
-        st.session_state.github_download_clicked = True
+def track_download(download_type):
+    """
+    Track download clicks for different sources.
+    """
+    state_key = f'{download_type}_download_clicked'
+    if not st.session_state.get(state_key, False):
+        increment_downloads(download_type)
+        st.session_state[state_key] = True
 
-def baidu_download_clicked():
-    if not st.session_state.baidu_download_clicked:
-        increment_downloads("baidu")
-        st.session_state.baidu_download_clicked = True
+@st.cache_data
+def get_book_content():
+    """
+    Cached function to load book content.
+    """
+    try:
+        with open(PDF_FILE_PATH, "rb") as pdf_file:
+            return pdf_file.read()
+    except FileNotFoundError:
+        return None
 
 def show():
+    """
+    Main function to display the book page including all sections:
+    header, book content, comments, authors, copyright, etc.
+    """
     try:       
         init_db()
         if 'github_download_clicked' not in st.session_state:
@@ -241,34 +282,27 @@ def show():
                 """
             )
             # Create two columns for download buttons
-            dl_col1, dl_col2, dl_col3 = st.columns(3)
-            pdf_file_path = "data/AI_book_v1.pdf"
+            dl_col1, dl_col2, dl_col3 = st.columns([1, 1, 1])
             with dl_col1:
-                try:
-                    with open(pdf_file_path, "rb") as pdf_file:
-                        PDFbyte = pdf_file.read()
-                    if st.download_button(
-                        label="📥 本地下载",
-                        data=PDFbyte,
-                        file_name="AI全景探索.pdf",
-                        mime='application/pdf'
-                    ):
-                        increment_downloads("local")
-                except FileNotFoundError:
-                    st.error("PDF文件未找到")
-        
-        # In the download section
-        with dl_col2:
-            pan_url = "https://pan.baidu.com/s/12G0be5tOJRfDHaVNwTA0-Q?pwd=wyj6"
-            if st.button("📥 网盘下载"):
-                baidu_download_clicked()
-                st.markdown(f'<meta http-equiv="refresh" content="0;url={pan_url}">', unsafe_allow_html=True)          
+                if os.path.exists(PDF_FILE_PATH):
+                    with open(PDF_FILE_PATH, "rb") as pdf_file:
+                        st.download_button(
+                            label="📥 本地下载",
+                            data=pdf_file,
+                            file_name=PDF_FILENAME,
+                            mime="application/pdf",
+                            on_click=lambda: track_download("local")
+                        )
 
-        with dl_col3:
-            github_url = "https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf"
-            if st.button("📥 Github下载"):
-                github_download_clicked()
-                st.markdown(f'<meta http-equiv="refresh" content="0;url={github_url}">', unsafe_allow_html=True)
+            with dl_col2:
+                if st.button("📥 网盘下载"):
+                    track_download("baidu")
+                    st.markdown(f'<meta http-equiv="refresh" content="0;url={BAIDU_URL}">', unsafe_allow_html=True)
+
+            with dl_col3:
+                if st.button("📥 Github下载"):
+                    track_download("github")
+                    st.markdown(f'<meta http-equiv="refresh" content="0;url={GITHUB_URL}">', unsafe_allow_html=True)
 
         # --- Book Introduction ---
         st.markdown("---")
@@ -330,21 +364,13 @@ def show():
         with tab5:
             show_contact_form()
             total, stats = get_download_stats()
-            download_types = {
-                'local': '本地下载',
-                'baidu': '网盘下载',
-                'github': 'Github下载'
-            }
             stats_text = []
             for download_type, count in stats:
-                display_type = download_types.get(download_type, download_type)
+                display_type = DOWNLOAD_TYPES.get(download_type, download_type)
                 stats_text.append(f"{display_type}: {count}次")
 
             st.markdown(f"<small>**下载统计**: 总下载次数: {total} | {' | '.join(stats_text)}</small>", unsafe_allow_html=True)
             
-        
-    
-        
     except Exception as e:
         st.error(f"发生错误: {str(e)}")
         logging.error(f"Application error: {str(e)}")    
