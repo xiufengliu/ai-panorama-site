@@ -20,7 +20,6 @@
 ## 下载
 
 - [GitHub下载](https://raw.githubusercontent.com/xiufengliu/ai-panorama-site/refs/heads/main/data/AI_book_v1.pdf)
-- [百度网盘下载](https://pan.baidu.com/s/1MwEcstL243vRXls01zN_Yg?pwd=61tw) (提取码: 61tw)
 
 -------------
 ## 作者
